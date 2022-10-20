@@ -32,6 +32,8 @@ namespace UILayer.Crm
         {
             services.AddScoped<IEmployeeService, EmployeeManager>();
             services.AddScoped <IEmployeeDal,EfEmployeeDal>();
+            services.AddScoped<IMessageService, MessageManager>();
+            services.AddScoped<IMessageDal, EfMessageDal>();
             services.AddDbContext<Context>();
             services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
            services.AddControllersWithViews();
@@ -57,7 +59,7 @@ namespace UILayer.Crm
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
