@@ -1,19 +1,12 @@
-using Crm.BusinessLayer.Absract;
-using Crm.BusinessLayer.Concrete;
-using Crm.DataAccessLayer.Abstract;
+using Crm.BusinessLayer.DIContainer;
 using Crm.DataAccessLayer.Concrete;
-using Crm.DataAccessLayer.EntityFrameWork;
 using Crm.EntityLayer.Concrete;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UILayer.Crm.Models;
 
 namespace UILayer.Crm
@@ -30,13 +23,23 @@ namespace UILayer.Crm
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IEmployeeService, EmployeeManager>();
-            services.AddScoped <IEmployeeDal,EfEmployeeDal>();
-            services.AddScoped<IMessageService, MessageManager>();
-            services.AddScoped<IMessageDal, EfMessageDal>();
+            services.ContainerDependencies();
+            services.AddAutoMapper(typeof(Startup));
+            services.DtoValidator();
             services.AddDbContext<Context>();
-            services.AddIdentity<AppUser, AppRole>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
-           services.AddControllersWithViews();
+            services.AddIdentity<AppUser, AppRole>(opts =>
+            {
+                opts.User.RequireUniqueEmail = true;
+                opts.User.AllowedUserNameCharacters = "abcdefghiýjklmnoöpqrstuüvwxyzABCDEFGHIJKLMNOPQRSTUÜVWXYZ0123456789-._@+ ";
+                opts.Password.RequiredLength = 3;
+                opts.Password.RequireUppercase = false;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireDigit = false;
+            }
+                )
+                //AddEntityFrameworkStores metodu Identity verilerinin depolandýðý veritabanýný belirler.
+                .AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
+            services.AddControllersWithViews().AddFluentValidation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -22,8 +22,9 @@ namespace UILayer.Crm.Controllers
 
         public  async Task<IActionResult> Inbox()
         {
+            //User.Identity=Kullanıcının oturum açtığı kimlik bilgilerini tutar
             var mail = await _userManager.FindByNameAsync(User.Identity.Name);
-            ViewBag.v = mail;
+            ViewBag.v = mail.Email;
             var values = _messageService.TGetReceiverMessageList(mail.Email);
             return View(values);
         }

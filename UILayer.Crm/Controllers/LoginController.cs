@@ -23,7 +23,7 @@ namespace UILayer.Crm.Controllers
         public async Task<IActionResult> Index(UserSignInModel p)
         {
             if (ModelState.IsValid)
-            {
+            {//persistent(bilgiyi bellekte tutar, beni hatırlasın mı),lockoutOnFailure(hatalı kullanımda kilitlensin mi)
                 var result = await _signInManager.PasswordSignInAsync(p.Username, p.Password, false, true);
                 if (result.Succeeded)
                 {

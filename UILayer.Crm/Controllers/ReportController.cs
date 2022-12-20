@@ -2,15 +2,11 @@
 
 namespace UILayer.Crm.Controllers
 {
-    public class DashboardController : Controller
+    public class ReportController : Controller
     {
         public IActionResult Index()
         {
             return View();
-        }
-        public PartialViewResult Partial1()
-        {
-            return PartialView();
         }
     }
 }

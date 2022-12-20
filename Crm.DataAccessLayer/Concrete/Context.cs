@@ -21,6 +21,7 @@ namespace Crm.DataAccessLayer.Concrete
         public DbSet<Role> Roles  { get; set; }
         public DbSet<Employee> Employees  { get; set; }
         public DbSet<Message> Messages  { get; set; }
+        public DbSet<Announcement> Announcements  { get; set; }
 
         
     }

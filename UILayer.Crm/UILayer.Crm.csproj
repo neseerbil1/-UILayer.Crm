@@ -29,7 +29,13 @@
   <ItemGroup>
     <ProjectReference Include="..\Crm.BusinessLayer\Crm.BusinessLayer.csproj" />
     <ProjectReference Include="..\Crm.DataAccessLayer\Crm.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Crm.DTO\Crm.DTO.csproj" />
     <ProjectReference Include="..\Crm.EntityLayer\Crm.EntityLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\images\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
